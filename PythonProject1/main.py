@@ -18,13 +18,17 @@ while True:
             for index,item in enumerate(todos):
                 print(f"{index+1}-{item.strip("\n")}")
         case "edit":
+            with open("files/todos.txt", "r") as file:
+                todos=file.readlines()
             number=int(input("Type a number of TODO to edit: "))
             number=number-1
             if number<len(todos):
                 existing_todo=todos[number]
                 print(f"You want to edit the TODO -> {existing_todo}")
-                new_todo=input("Type a TODO: ").capitalize()
+                new_todo=input("Type a TODO: ").capitalize()+"\n"
                 todos[number]=new_todo
+                with open("files/todos.txt", "w") as file:
+                    file.writelines(todos)
             else:
                 print(f"You have only {len(todos)} TODOs.  Invalid input")
         case "complete":
