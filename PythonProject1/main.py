@@ -24,7 +24,7 @@ while True:
             number=number-1
             if number<len(todos):
                 existing_todo=todos[number]
-                print(f"You want to edit the TODO -> {existing_todo}")
+                print(f"You want to edit the TODO -> {existing_todo.strip("\n")}")
                 new_todo=input("Type a TODO: ").capitalize()+"\n"
                 todos[number]=new_todo
                 with open("files/todos.txt", "w") as file:
@@ -35,10 +35,13 @@ while True:
             with open("files/todos.txt", "r") as file:
                 todos=file.readlines()
             index = int(input("Number of the TODO to complete: "))
+            todo_to_remove=todos[index-1].strip("\n")
+            print(len(todos))
             if index<=len(todos):
                 todos.pop(index-1)
                 with open("files/todos.txt", "w") as file:
                     file.writelines(todos)
+                print(f"You have removed - {todo_to_remove} - TODO from the list.")
             else:
                 print("Invalid input. Try again!!")
         case "delete":
