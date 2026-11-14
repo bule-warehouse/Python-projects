@@ -32,22 +32,30 @@ while True:
             else:
                 print(f"You have only {len(todos)} TODOs.  Invalid input")
         case "complete":
+            with open("files/todos.txt", "r") as file:
+                todos=file.readlines()
             index = int(input("Number of the TODO to complete: "))
-            if index<len(todos):
+            if index<=len(todos):
                 todos.pop(index-1)
+                with open("files/todos.txt", "w") as file:
+                    file.writelines(todos)
             else:
                 print("Invalid input. Try again!!")
         case "delete":
+            with open("files/todos.txt", "r") as file:
+                todos=file.readlines()
             user_selection= input("Do you want to delete all TODOs? Type yes or no: ").lower().strip()
             if user_selection=="yes":
                 todos.clear()
+                with open("files/todos.txt", "w") as file:
+                    file.writelines(todos)
             elif user_selection=="no":
                 program_close=input("Do you want to close the program? Type yes or no: ").lower().strip()
                 if program_close=="yes":
                     break
             else:
-                print("Invalid input. Try again!!")
+                print("Invalid input. Try again!")
         case "exit":
             break
         case _:
-            print("Invalid input")
+            print("Invalid input. Try again!")
