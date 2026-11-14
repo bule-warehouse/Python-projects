@@ -1,18 +1,22 @@
-user_prompt="Enter a TODO: "
-todos=[]
+# TODO console app
 while True:
     user_action=input("Type add, show, edit, complete, delete or exit: ").lower().strip()
     match user_action:
         case "add":
-            todo=input(user_prompt)
+            with open("files/todos.txt", "r") as file:
+                todos=file.readlines()
+
+            todo=input("Enter a TODO: ")+"\n"
             todos.append(todo.capitalize())
-            file=open("todos.txt","w")
-            file.write(todo)
-            file.close()
+
+            with open("files/todos.txt", "w") as file:
+                file.writelines(todos)
         case "show" | "display":
+            with open("files/todos.txt", "r") as file:
+                todos = file.readlines()
             print(f"You have {len(todos)} TODOs:")
             for index,item in enumerate(todos):
-                print(f"{index+1}-{item}")
+                print(f"{index+1}-{item.strip("\n")}")
         case "edit":
             number=int(input("Type a number of TODO to edit: "))
             number=number-1
